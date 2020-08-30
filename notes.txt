@@ -1,0 +1,190 @@
+Declaring Custom variables in CSS
+:root {
+    --primary-color: #ff1b68;
+}
+
+section {
+    background: var(--primary-color);
+}
+
+We use root for a global scope. It could be any element if you want to limit the scope.
+Variables should start with --
+============================================================================================================
+Specificity
+
+Inline Styles > #id selectors > .class, :pseudo-class, [attribute] > <Tag> and ::pseudo-element selectors > *
+
+If two or more selectors set the same style, then the style of the last selector in the CSS file wins.
+============================================================================================================
+Combinators
+
+Adjacent Sibling (applies the style to p tag that immediately follow a h2 tag under the same parent)
+h2 + p {
+}
+
+General Sibling (applies to all p tags that has a h2 sibling somewhere on the top but under the same parent)
+h2 ~ p {
+}
+
+Child (any p tag that is a direct child of the div tag gets the child)
+div > p {
+}
+
+Descendant (any p tag that is a direct or indirect child of the div tag gets the style)
+div p {
+}
+
+.classA .classB (matches any elements with classB that are descendants of element with classA)
+
+.classA.classB (matches any element with both the classes)
+<tag>.classA (matches any <tag> element that has the classA. Ex: a.active selects anchor tags that
+              have the class active)
+            
+=============================================================================================================
+Always start any CSS file like this
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+=============================================================================================================
+Display Property
+
+Certain elements in HTML take up the entire horizontal block. It is their default behaviour.
+Their display property is by default block. Example: <div>, <h1>, <p>, <nav>
+
+Certain other html elements take up space only needed for their content in the same line.
+Setting width and height for these elements won't work, because their default display is set to inline.
+Examples: <a>, <img>
+
+Using CSS we are capable changing these default behaviours. 
+By setting the display to whatever suits our need. 
+display can also be set to inline-block, to get the properties of both inline and block elements.
+
+There is a problem with display: inline-block.
+It also considers the space in your html document.
+
+<div>
+   Something
+</div>
+{This space is calculated during inline-block}
+<nav>
+  Something
+</nav>
+
+===========================================================================================================
+Similar to var there is another CSS function calc()
+Allows one to perform calculations to determine CSS perperty values
+
+calc(100px - 60px)
+===========================================================================================================
+Pseudo classes: defines the style for a special state of an element
+Pseudo element: defines the style of a specific part of an element
+We can use pseudo classes and elements alone, need not use it with another selector if we don't want to.
+
+selector:pseudo-class {
+    property: value;
+}
+
+Example: hover, active, nth-child(), nth-of-type(), last-child, first-child
+
+a:hover {
+    color: red;
+}
+
+selector::pseudo-element {
+    property: value;
+}
+
+Example: after, before, first-line, first-letter
+
+p::first-letter {
+    font-size: 32px;
+}
+
+==========================================================================================================
+If two or more selectors have the same set of properties its always better to combine them.
+selector_1, selector_2 {
+    color: white;
+}
+
+==========================================================================================================
+!important annotaion
+
+div {
+    color: red !important;
+}
+
+This important annotation overwrites specifity and all other selectors.
+Try to avoide it, because you are writing bad code.
+==========================================================================================================
+:not(<selector>) 
+
+:not(p) {
+    color: yellow;
+}
+
+Now this selects anything that is not the p tag.
+
+a:not(.active) {
+    color: red;
+}
+
+Selects any anchor tag that does not have the active class.
+==========================================================================================================
+Browser Support
+We can use a site called caniuse.com to determine if the selectors or features I want to use in 
+my application is supported by various browsers.
+
+==========================================================================================================
+Let's say you centered a div using margin set to auto.
+Now the div will be centered, what about the content inside the div?
+You can center the content inside the div using text-align set to center.
+
+==========================================================================================================
+Postion property
+Let's say we have several divs in our html code. These are block level elements and will follow the document
+flow.
+The default postion of elements is set to static.
+We can however remove the elements from the document flow and position it wherever we want the element to be.
+absolute, relative, fixed, sticky are the various values we can use with position.
+
+We should use top, right, bottom, left and z-index to now position the element.
+
+When we set the position to fixed, we are basically removing the element from
+the document flow. That means other elements does not know that this element exist and also our element
+behaves as an inline-block element.
+
+Note on z-index
+Elements that do not have a position property set to something other than static(default), whatever z-index you 
+set it to, it does not have any effect.
+When you have a position property set to something other than static, remember the z-index gets applied by
+default, even if you do not set it.
+The default z-index that gets set when the position is not static is z-index: auto/z-index: 0
+
+position: absolute; the element will have a position context to the closest ancestor that has a position
+                    property applied. If non of the ancestors have a postion property set, then the position
+                    context is the html element.
+Both absolute and fixed position values take the elements out of the document flow.
+relative does not remove the element from the document flow.
+
+When you set the positon property to relative, the position context is the element it self.
+That is, if we now apply top: 50; left: 50; the element will move 50px on top from its initial position
+and move 50px left from its initial position. So when you set your element position to relative
+top: 0, left: 0; hence the element stays where it was initially, therefore not removed from the document flow.
+
+Now lets say we position an element in such a way that it may go out of its parent element.
+We can avoid it by setting 
+overflow: hidden; to the parent element.
+
+position: sticky; behaves like relative and fixed.
+When we set the property to sticky, it first behaves as a relative position, nothing changes
+As soon as you add top: 20px; The element will stop at 20px from viewport.
+=============================================================================================================
+
+

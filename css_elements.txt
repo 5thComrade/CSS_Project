@@ -1,0 +1,67 @@
+Font Properties
+
+font: inherit, this will force the element to inherit the fonts we set replacing the browser defaults
+cursor: pointer
+font-family: Sets what font you want your text nodes to have
+font-weight: Sets how thick or thin the characters of your texts should be
+font-size: Sets the size of your fonts
+text-decoration: Sets how your texts should look and what decorations it should have
+                 Values for this property are none, underline, overline, line-through, dotted, dashed
+
+=======================================================================================================
+
+List Properties
+
+list-style: Sets the style of the bullet points. 
+            Values are none, disc, circle, square, upper-alpha, lower-alpha, decimal
+
+
+=======================================================================================================
+
+Alignment Properties
+
+text-align: Aligns content horizontally
+            Values are center, left, right, start, end, initial, inherit
+
+vertical-align: Aligns content vertically
+                Values are middle, top, bottom, super, sub
+
+=======================================================================================================
+Border Properties
+
+border: 1px solid red;
+border-radius: 5px; //this rounds the corners
+border-radius: 50% //for a perfect circle, but the height and width of the element should be exactly the same
+border: none;
+border-color: <color>
+
+box-shadow: x-axis y-axis blur spread color;
+box-shadow: inset x-axis y-axis blur spread color;
+
+outline: none 
+         This property is not part of the box model, yet it exists. It exists under the :focus pseudo class
+         is active.
+
+=======================================================================================================
+Margin
+
+margin: auto; //distributes margin evenly around all sides, helps in centering the content
+
+=======================================================================================================
+Position
+
+position: fixed; //position context is the viewport
+position: relative; //the position context is the element itself
+position: absolute; //position context is the html element or the nearest ancestor with a position property
+                    //other than static
+position: sticky;
+
+overflow: hidden; //If our element gets positioned outside the parent, set this in the parent to hide everything
+                  //that overflows
+
+top: 0;
+left: 20px;
+right: 35px;
+bottom: 34px;
+z-index: 100;
+
