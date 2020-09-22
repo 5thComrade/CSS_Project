@@ -39,6 +39,7 @@ div p {
 .classA.classB (matches any element with both the classes)
 <tag>.classA (matches any <tag> element that has the classA. Ex: a.active selects anchor tags that
               have the class active)
+<tag>[type="email"] (matches any tag element with the type attribute set to email)
             
 =============================================================================================================
 Always start any CSS file like this
@@ -86,6 +87,7 @@ calc(100px - 60px)
 Pseudo classes: defines the style for a special state of an element
 Pseudo element: defines the style of a specific part of an element
 We can use pseudo classes and elements alone, need not use it with another selector if we don't want to.
+Please check out all the pseudo classes, its very useful and important.
 
 selector:pseudo-class {
     property: value;
@@ -186,5 +188,352 @@ position: sticky; behaves like relative and fixed.
 When we set the property to sticky, it first behaves as a relative position, nothing changes
 As soon as you add top: 20px; The element will stop at 20px from viewport.
 =============================================================================================================
+Background properties
 
+background-size: cover === background-size: 100%
+Cover and 100% ensures that the image takes the complete container width and height, but it may crop it.
+Cover checks if your image is a landscape or a potrait, compares it with the container.
+Cover always ensures that there will not be any white spaces in your container, the container will completely
+hold the image.
+
+background-size: contain
+Contain will ensure that the full image is visible inside the container.
+There may be white spaces, but the full image will be visible.
+Cover actually crops the image to fit it in so that it looks good.
+
+background-position: center;
+Center of the image is the center of the container.
+background-position: left top;
+left edge and top edge of the image will be now visible, that means the bottom will be cropped out
+background-position: left bottom;
+left edge and the bottom edge of the image will be now visible, that means the top of the image
+will be cropped off.
+
+background-position: left 10% bottom 20%
+crop off 10% of the image not visible from left and crop off 20% of the image not visible from the bottom.
+
+background-image: url(); //one or MORE images
+background-color: red;
+background-repeat: none;
+
+Now all our elements have box-sizing set to border-box, however for image that is not the default.
+If we add a dashed border around the image container, you will see white spaces between the dashes.
+background-origin: border-box; will now ensure that you will see the image between the dashes.
+
+background-clip: padding-box; //clip the image, ie remove the image that goes beyond the padding
+background-clip: border-box; //clip the image beoynd the border
+
+background-attachment: fixed; //the image is fixed to the viewport
+background-attachment: scroll; //image is fixed to the container and the content can be scrolled
+background-attachment: local; //both image and content can be scrolled
+===========================================================================================================
+Styling images
+
+Lets say we have an anchor tag with our company logo in it.
+The logo will take its own height, going out of the anchor tag.
+Thats not we want, we can set height: 100%; on the image and this would mean now the image should take
+100% of its container only. But this does not work WHY???
+
+Its because <a> is an inline element.
+Make it block or inline-block and now set height: 100% on the image...the image shrinks to fit the container.
+
+============================================================================================================
+Liner Gradients
+
+Gradients are treated as images in css. By default the direction of linear gradient is top to bottom.
+background-image: linear-gradient(red, blue);
+background-image: linear-gradient(to left bottom, red, blue);
+background-image: liner-gradient(to top, red, blue, yellow);
+background-image: liner-gradient(to bottom, black, transparent);
+
+===========================================================================================================
+Radial Gradients
+
+backgroud-image: radial-gradient(red, green);
+backgroud-image: radial-gradient(circle, red, green, blue);
+backgroud-image: radial-gradient(circle at top left, red, green, blue);
+backgroud-image: radial-gradient(circle at 20% 70%, red, green, blue);
+
+==========================================================================================================
+Using Multiple Backgrounds
+
+background: linear-gradient(), url() left top cover no-repeat, red;
+
+The different background images are separated by commas.
+Make the first one transparent or slightly transparent so we can see the second image.
+
+=========================================================================================================
+Filter
+
+There are several filter methods that we could make use off to filter our background images
+filter: grayscale(100%);
+filter: opacity(50%) blur(1px);
+
+There are several filters we could use please google. 
+Remember to keep the browser compatibility in mind.
+
+========================================================================================================
+CSS Units
+
+pixels - px 
+percentages - %
+root em - rem 
+em - em 
+viewport height - vh 
+viewport width - vw 
+
+Which CSS properties need units?
+1: font-size
+2: padding
+3: border
+4: margin
+5: width
+6: height
+7: top
+8: bottom
+9: left
+10: right
+
+How is size calculated?
+Absolute Lengths (px)
+Viewport Lengths (vh, vw)
+Font-Relative Lengths (rem, em)
+Special case (%)
+
+Rule 1 for %
+If we are using % to set our sizes, we need to understand what a containing block is.
+Containing block is the element that is referred to when we set % sizes.
+If we set the position of our element to fixed ie: position: fixed
+Then the containing block of our element is the viewport.
+So when we set our elements width to 100%, we are referring to the viewport and taking 100% of 
+the viewport width for our element.
+
+Rule 2 for %
+If the element we want to size has a position property set to absolute,
+then the containing block is the closest ancestor which has a position property set to something
+other than static. If none of the ancestors have a position property other than static, then the 
+containing block is the viewport.
+Remember the ancestors content and padding are considered for reference.
+
+Rule 3 for %
+If the element we want to size has a position property set to static(default) or relative
+then the containing block is the closest ancestor which is a block level element.
+Only the content part of the containing block is considered when we use % in this scenario.
+When the position is set to static or relative, setting the height using percentages is a challenge.
+You may need to google a bit.
+
+====================================================================================================
+max-width - maximum width a container can have
+min-width - minimum width a container can have
+
+====================================================================================================
+Font sizing(rem and em)
+
+1em browser default is 16px
+
+Parent (font-size: 1.2em = 1.2 * 16px)
+   Child (font-size: 1.1em = 1.1 * 1.2 * 16px)
+
+You see the Child element inherits the parents em.
+
+Parent (font-size: 1.2em = 1.2 * 16px)
+    Child (font-size: 1.1rem = 1.1 * 16px)
+
+You see, when we use rem for the child element the font-size is always calculated with the
+browser default 16px
+===================================================================================================
+You can any property using rem, however it will always refer to the browser default of 16px(medium)
+If you set the margin to 3rem it would mean 3 * 16 = 48px
+
+==================================================================================================
+Viewport Height and Viewport width
+100vw means 100% of the viewport width
+80vh means 80% of the viewport height
+
+100vw adds horizontal scrollbar, which is sad.
+Use width: 100% instead if you want to avoid the horizontal scrollbar.
+or use overflow-x: hidden
+==================================================================================================
+Which Unit Should I Choose?
+
+font-size - rem
+padding and margin - rem
+border - px
+width and height - % or vh or vw
+top and bottom - %
+left and right - %
+
+==================================================================================================
+Another way to center block elements 
+margin: auto;
+
+==================================================================================================
+Responsive Design
+
+mydevice.io 
+This is an amazing site to compare hardware px to css px
+
+In order to make our website responsive we need the viewport meta tag in our html document.
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+Without this meta tag, our entire website will be sqeezed to fit in on a mobile screen(desktop view on chrome
+mobile browser)
+With this tag, we can now use media queries to design our site on smaller screen sizes.
+
+===================================================================================================
+Mobile First designs and Media queries
+
+Media queries are like if statements
+We should write code for mobile devices and then use media queries to make tablet and desktop designs.
+We can have multiple queries
+
+Complex media qieries "and" and "or"
+
+@media (min-width: 40rem) and (orientation: potrait) {
+    //these will be executed when both the conditions are met
+}
+
+@media (min-width: 40rem) and (min-height: 40rem) {
+    //these will be executed when both the conditions are met
+}
+
+@media (min-width: 40rem), (orientation: landscape) {
+    //these will be executed when one of the condition is met
+}
+
+Try using the following break points, but always design mobile first.
+
+640px - 40rem
+768px 
+1024px
+1200px
+===================================================================================================
+Advanced Attribute selectors
+
+[type] {
+    color: red;
+}
+
+The above code snippet selects all elements that has a type attribute set
+Ex: <input type="text">
+
+[type="email"] {
+    color: red;
+}
+
+The above code snippet selects all elements that has a type attribute set to email
+Ex: <input type="email">
+
+[lang~="en-us"] {
+    color: red;
+}
+
+The above code snippet selects all elements that has a lang attribute set which has one value en-us
+Ex: <p lang="en-us en-gb">Hi!!</p>
+
+[href^="#"] {
+    color: red;
+}
+
+The above code snippet selects all elements that has href attribute set which starts with a #
+Ex: <a href="#all">Link</a>
+
+[href$=".com"] {
+    color: red;
+}
+
+The above code snippet selects all elements with the href attribute set which ends with .com
+
+label[for="password"] {
+    //this will select all labels with a for attribute set to password
+}
+===================================================================================================
+Form Styling
+
+Input fields have some default browser styles that you may want to overwrite.
+Input fields have something called outline when focussed, you can remove that using
+
+input:focus {
+    outline: none;
+}
+
+Even if you set the display to block, inputs and buttons do not span the entire width, you have to 
+manually set width: 100%; for it to span the entire width.
+
+If you want the text inside the inputs not to be the browser defaults, then you can set
+font: inherit;
+
+Styling checkbox's and select dropdowns is hard, because the browser has its own set of styles applied.
+However we can overwrite them
+
+For example, styling a checkbox
+
+input[type="checkbox"] {
+    -webkit-appearance: none; //chrome default appearance set to none
+    -moz-appearance: none; //mozilla firefox default appearance set to none
+     appearance: none; //general apperance in other browsers set to none
+     background: white; //now setting our styles
+     border: 1px solid #ccc; 
+}
+
+input[type="checkbox"]:checked {
+    //when the checkbox is checked
+    background: green;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    background: #ccc;
+    border-color: #ccc;
+    color: black;
+}
+
+===========================================================================================================
+Fonts
+
+Generic font families and font families
+
+Times New Roman and Georgia are font families, but they belong to serif generic font family.
+Helvetica and Verdana are font families, but they belong to the sans-serif generic font family.
+Brush Script and Mistral are font families, but they belong to the cursive generic font family.
+Courier New and Lucida Bright are font families, but they belong to the monospace font family.
+
+What font will be selected?
+
+If no font-family is set in your css code, the browser will select its default font-family(In Chrome, its 
+called Standard font).
+
+If we set our font-family in our css to a generic font family, then the browser will choose the
+font-family set under that generic font-family in the browser.
+Ex: font-family: sans-serif; //the font-family specified under sans-serif in your browser is choosen
+
+If you set a font-family that is not a generic one, then either the font should be downloaded and saved
+in the users computer, or we use web fonts(Google fonts) or we use a font from a server(our server).
+
+=========================================================================================================
+If you are using Google fonts, then @import them in your shared css file, instead of having multiple
+links to fonts in multiple html files.
+
+If you want to add your own font's
+Download the ttf file, add it to your source code like below in your css file
+
+@font-face {
+    font-family: "GiveSomeName";
+    src: url("./GiveSomeName-Font.ttf");
+}
+
+Different font properties
+font-size
+font-variant
+font-stretch
+letter-spacing
+white-space
+line-height: 2; //means 2*font-size without the decimals for the content box or you could use px or %
+
+text-decoration: underline dotted red;
+text-shadow: offset to x-axis, offset to y-axis, blur, color;
+
+Font Shorthand
+font: font-style(optional) font-weight(optional) font-size(must)/line height(optional) font-family(must)
 

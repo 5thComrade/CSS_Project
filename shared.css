@@ -15,12 +15,24 @@ body {
   margin: 0;
 }
 
+.backdrop {
+  position: fixed;
+  display: none;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+}
+
 .main-header {
   width: 100%;
-  padding: 8px 16px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 0.5rem 1rem;
   background: var(--primary-green);
   position: fixed;
-  z-index: 100;
+  z-index: 50;
 }
 
 .main-header > div {
@@ -28,17 +40,40 @@ body {
   vertical-align: middle;
 }
 
+.toggle-button {
+  width: 3rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding-top: 0;
+  padding-bottom: 0;
+  vertical-align: middle;
+}
+
+.toggle-button:focus {
+  outline: none;
+}
+
+.toggle-button__bar {
+  width: 100%;
+  height: 0.2rem;
+  background: black;
+  display: block;
+  margin: 0.6rem 0;
+}
+
 .main-header__brand {
   color: var(--brand-green);
   text-decoration: none;
   font-weight: bold;
-  font-size: 22px;
+  font-size: 1.3rem;
+  vertical-align: middle;
 }
 
 .main-nav {
   display: inline-block;
   text-align: right;
-  width: calc(100% - 75px);
+  width: calc(100% - 123px);
   vertical-align: middle;
 }
 
@@ -46,14 +81,26 @@ body {
   margin: 0;
   padding: 0;
   list-style: none;
+  display: none;
+}
+
+@media (min-width: 40rem) {
+  .main-nav__items {
+    display: inline-block;
+  }
+
+  .toggle-button {
+    display: none;
+  }
 }
 
 .main-nav__item {
   display: inline-block;
-  margin: 0 16px;
+  margin: 0 1rem;
 }
 
-.main-nav__item a {
+.main-nav__item a,
+.mobile-nav__item a {
   text-decoration: none;
   color: var(--brand-green);
   font-weight: bold;
@@ -66,15 +113,18 @@ body {
   border-bottom: 3px solid white;
 }
 
-.main-nav__item--cta a {
+.main-nav__item--cta a,
+.mobile-nav__item--cta a {
   color: white;
   background: var(--primary-red);
-  padding: 8px 16px;
+  padding: 0.5rem 1rem;
   border-radius: 8px;
 }
 
 .main-nav__item--cta a:hover,
-.main-nav__item--cta a:active {
+.main-nav__item--cta a:active,
+.mobile-nav__item--cta a:hover,
+.mobile-nav__item--cta a:active {
   color: var(--primary-red);
   background: white;
   border: none;
@@ -82,8 +132,8 @@ body {
 
 .main-footer {
   background: black;
-  padding: 32px;
-  margin-top: 48px;
+  padding: 2rem;
+  margin-top: 3rem;
 }
 
 .main-footer__links {
@@ -94,9 +144,16 @@ body {
 }
 
 .main-footer__link {
-  display: inline-block;
-  margin: 0 16px;
+  display: block;
+  padding: 0.7rem 0;
+  margin: 0 1rem;
   font-weight: bold;
+}
+
+@media (min-width: 40rem) {
+  .main-footer__link {
+    display: inline-block;
+  }
 }
 
 .main-footer__link > a {
@@ -109,12 +166,40 @@ body {
   color: var(--primary-red);
 }
 
+.mobile-nav {
+  display: none;
+  position: fixed;
+  z-index: 101;
+  top: 0;
+  left: 0;
+  background: white;
+  width: 80%;
+  height: 100vh;
+}
+
+.mobile-nav__items {
+  width: 90%;
+  height: 100%;
+  list-style: none;
+  margin: 6rem auto;
+  padding: 0;
+  text-align: center;
+}
+
+.mobile-nav__item {
+  margin: 1rem 0;
+}
+
+.mobile-nav__item a {
+  font-size: 1.5rem;
+}
+
 .button {
   background: var(--brand-green);
   color: white;
   font: inherit;
   border: 1.5px solid var(--brand-green);
-  padding: 8px;
+  padding: 0.5rem;
   border-radius: 8px;
   font-weight: bold;
 }
@@ -128,4 +213,60 @@ body {
 
 .button:focus {
   outline: none;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  background-color: #ccc;
+  color: black;
+  border-color: #ccc;
+}
+
+.modal {
+  position: fixed;
+  display: none;
+  z-index: 200;
+  top: 20%;
+  left: 30%;
+  width: 40%;
+  background: white;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.modal__title {
+  text-align: center;
+  margin: 0 0 1rem 0;
+}
+
+.modal__actions {
+  text-align: center;
+}
+
+.modal__action {
+  border: 1px solid #0e4f1f;
+  background: #0e4f1f;
+  text-decoration: none;
+  color: white;
+  font: inherit;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.modal__action:hover,
+.modal__action:active {
+  background: #2ddf5c;
+  border-color: #2ddf5c;
+}
+
+.modal__action--negative {
+  background: red;
+  border-color: red;
+}
+
+.modal__action--negative:hover,
+.modal__action--negative:active {
+  background: #ff5454;
+  border-color: #ff5454;
 }
