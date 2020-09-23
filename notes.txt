@@ -537,3 +537,80 @@ text-shadow: offset to x-axis, offset to y-axis, blur, color;
 Font Shorthand
 font: font-style(optional) font-weight(optional) font-size(must)/line height(optional) font-family(must)
 
+==========================================================================================================
+FLEXBOX
+
+display: flex;
+The element which holds this property will now be a flex container
+The parent which has display set to flex is called the flex container and the children of this
+parent is called the flex items.
+
+Parent container can have the following properties
+
+flex-flow:
+justify-content:
+align-content:
+align-items:
+
+Flex items can have the following properties
+order:
+flex: 
+align-self:
+
+==========================================================================================================
+One can set the display to flex or inline-flex
+The difference is the flex items inside the flex container expand and compress according to the 
+width of the screen.
+Whereas flex items inside a inline-flex container always take the necessary width and the container
+behaves like an inline element.
+
+When you set display flex to a container, behind the scenes two other properties were added
+
+flex-direction: row; //row is the default value
+flex-wrap: nowrap; //nowrap is the default value
+
+If you set the flex-wrap to wrap, then the flex items will take the original width set in css on 
+another line one by one as we reduce the width, until all the flex items are stacked on top of each other.
+
+                   main axis --->
+     cross axis  flex-direction: row
+         |
+        \|/
+
+                                                                                 <--main axis
+                                                                    flex-direction: row-reverse  cross axis
+                                                                                                      |
+                                                                                                     \|/
+
+                   cross axis --->
+     main axis   flex-direction: column
+         |
+        \|/              
+
+
+                                                       /|\
+                                                        |      flex-direction: column-reverse
+                                                    main axis         cross axis  --->
+
+
+Which property ensures all the flex items take the same direction in the flex container?
+align-items: stretch; //stretch is the default value
+
+align-items: center; //we center the flex items along the cross axis
+align-items: flex-start; //the flex items will now start from the beginning of the cross axis
+align-items: flex-end; //the items will be attached to the bottom of the cross axis
+
+justify-content: center; //we center the flex items along the main axis
+justify-content: flex-start; //the flex items will now start from beginning of the main axis 
+justify-content: flex-end; //the flex items will now start from the bottom of the main axis
+
+align-items -----> cross axis
+justify-content ------> main axis
+
+
+align-content: center; //we center the content of the container along the cross axis
+align-content: space-between; //we have space between our contents along the cross axis
+
+=====================================================================================================
+
+
