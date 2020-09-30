@@ -32,15 +32,17 @@
 }
 
 @media (min-width: 40rem) {
+  .testimonial {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .testimonial__image-container {
     width: 65%;
-    display: inline-block;
-    vertical-align: middle;
+    margin-top: 3rem;
   }
   .testimonial__info {
-    display: inline-block;
     width: 30%;
-    vertical-align: middle;
   }
 }
 

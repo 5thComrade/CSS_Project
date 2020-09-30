@@ -408,6 +408,8 @@ Try using the following break points, but always design mobile first.
 768px 
 1024px
 1200px
+
+If you find your elements expanding as you expand the screen, then max-width is for your rescue.
 ===================================================================================================
 Advanced Attribute selectors
 
@@ -606,11 +608,44 @@ justify-content: flex-end; //the flex items will now start from the bottom of th
 
 align-items -----> cross axis
 justify-content ------> main axis
-
+align-content ------> combination of align-items and justify-content
 
 align-content: center; //we center the content of the container along the cross axis
 align-content: space-between; //we have space between our contents along the cross axis
 
 =====================================================================================================
+Flex items and its properties
+
+order: 0; //will change the order in which the items are displayed in the main axis
+          //0 is the default, if you set a negative number the item will be positioned at the start of the main
+          //axis, if you set it to a positive number it will be positioned at the end of the main axis
+
+align-self: flex-start; //positions the item (only that item) along the cross axis.
+
+flex-grow: 0;// the width of this item will stretch until all the space in the main axis is used up
+             //ie width of this element + width of all the other flex items combined = main axis Lengths
+             //without flex-grow, the main axis may have some extra unused space.
+             //0 is default, you can set it to any natural number
+             //If you have two items with lets say flex-grow: 1 and flex-grow: 5, then 1/5th of the extra
+             //space gets added to the first flex item and 4/5th of the extra space added to the second item
+
+flex-shrink: 1;//default is 1, if we have flex-wrap set to nowrap, then the element will shrink
+               //until it content requires
+               //However, if we set the value to 0, then the element will shrink only till the defined width
+               //when the defined width is hit, it stops shrinking
+               
+flex-basis: auto;//if the main axis is from left to right, then flex-basis refer to the width
+                 //if it is from top to bottom it refers to the height
+                 //if this value is set, it overrides any width and height properties set based on the 
+                 //direction of the main axis
+                 //flex-direction: row; main axis left to right; element height: 250px; flex-basis: 300px;
+                 //the element will have a width(left to right) of 300px and not 250px.
+
+Short hand for flex-grow, flex-shrink, flex-basis
+flex: 0 1 auto;
+
+=====================================================================================================
+
+
 
 
