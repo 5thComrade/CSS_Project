@@ -645,7 +645,169 @@ Short hand for flex-grow, flex-shrink, flex-basis
 flex: 0 1 auto;
 
 =====================================================================================================
+CSS Grid System
+
+Set the container to
+display: grid;
+
+By default, the grid container has only one column, taking 100% of its parent container.
+If we want to disrupt the flow and define multiple columns we use
+
+grid-template-columns: 200px 450px 20%; //This property sets 3 columns each with the specified widths.
+grid-template-columns: 20% 2fr 30% 1fr; //column 1 will have 20% column 3 will have 30%
+                                        //column 2 will have 2/3 * 50% and column 4 will have 1/3 * 50%
+                                        //fr stands for fraction, the remaining space gets divided into
+                                        //fractions 2fr gets twice as space as 1fr from the remaining space.       
 
 
+grid-template-rows: 5rem 2.5rem; //sets 2 rows each with the specified height
 
+Now imagine if we have 3 columns and 2 rows, then the number of grid cells = 2 * 3 = 6 cells
+The children of the grid container each will take one cell, if there are only 4 children, then 4 cells will
+be filled leaving 2 cells with nothing(empty).
 
+How do we overwrite this behaviour where each child takes 1 cell each?
+To overwrite this behaviour we go to the child element css and use the following properties
+
+grid-column-start: 3; //start this child from the 3rd column line
+grid-column-end: 5; //end this child on the 5th column line
+grid-row-start: 1; //start this child at the 1st row line
+grid-row-end: 3; //end this child on the 3rd row line
+grid-column-end: span 2//end this child after it occupies 2 cells
+
+If you want the container to have all equally sized columns
+grid-template-columns: repeat(4, 25%); //this will create 4 columns each with 25% width
+grid-template-columns: repeat(4, 25% 25% 25% 25%); //this will create 4 columns each with 4 other columns
+                                                   //creating 16 columns
+
+Another helper css method is minmax
+
+grid-template-rows: 5rem minmax(2rem, 10rem), 25%; //this will create 3 rows
+                                                   //first one with 5rem height
+                                                   //second one with a 2rem <= height <= 10rem
+                                                   //third one with 25% of the container height
+
+If you explictly specify the grid container children to overlap, they overlap.
+NOTE: Child elements can occupy the same cell, if you explicitely mention it, grid System
+tries to avoide such overlaps.
+
+Instead of using line numbers, we could name them too
+
+grid-template-rows: [row-1-start] 5rem [row-1-end row-2-start] 7rem;
+The above code snippet names the first horizontal line row-1-start, we name the second horizontal line to
+be either row-1end or row-2-start. In this manner we can use these names instead of line numbers in our 
+child elements to position them.
+
+Shorthands in Grid
+grid-column-start and grid-column-end can be combined together to make a Shorthand
+grid-column: 1 / 2; //first is the start value and the second value is the end value
+
+Same with the row too.
+
+Combine all of it into one
+grid-area: grid-row-start / grid-column-start / grid-row-end / grid-column-end;
+
+============================================================================================================
+Gap between cells
+
+On the container
+grid-row-gap: 10px;
+grid-column-gap: 10px;
+grid-gap: grid-row-gap grid-column-gap;
+
+===========================================================================================================
+Naming our child elements
+
+gridContainer {
+    grid-template-rows: 50% 25% 25%; //3 rows
+    grid-template-columns: repeat(4, 25%); //4 columns
+    grid-template-areas: "header header header header"
+                         "sideBar main main main"
+                         ". footer footer footer";
+}
+
+child1 {
+    grid-area: header;
+}
+
+child2 {
+    grid-area: sideBar;
+}
+
+child3 {
+    grid-area: main;
+}
+
+child4 {
+    grid-name: footer;
+}
+
+In the above code snippet we see that our grid system has 12 cells(3*4).
+The first 4 row cells is the header, the next row has 1 cell for side bar and the other 3 for main.
+The last row has one cell empty(defined with a .) and 3 cells for the footer.
+====================================================================================================
+Elements that are not part of the document flow, ie fixed and absolute elements are not part of the grid
+and hence not considered for rows
+
+One way to ensure our rows will fit the content is by using a helper function
+
+grid-template-rows: auto fit-content(8rem);
+
+This will ensure that our second row content will be displayed if the width goes below 8rem.
+Otherwise thw default width is 8rem on all pages.
+
+====================================================================================================
+By default a grid child takes the entire width of the cell.
+What if you want the child to occupy only certain parts of the cell?
+We can use justify-items: center; //We use this in the parent grid container
+                                  //Now each grid will be centered in its own cell/s horizontally x-axis, 
+                                  //taking only the space necessary for its content. 
+                                  //Other values, start, end, stretch(default)
+
+            align-items: center; //We use this in the parent grid container
+                                 //Now each grid will be centered in its own cell/s vertically y-axis,
+                                 //taking only the sapce necessary for its content
+                                 //Other values start, end, stretch(default)
+            
+If the grid container is much bigger than the grid content, then we can position the entire content
+as we want it to.
+
+justify-content: center; //positions along the x axis. Other values, start, end
+align-content: center; //positions along the y axis. Other values start, end
+
+If you want to just position one child in its cell?
+Go to the child css definition
+justify-self: center; //x-axis 
+align-self: center; //y-axis
+
+Responsive grids can be achieved by adding media queries
+to control the number of rows and columns.
+
+===================================================================================================
+When the container has display set to grid, then it will define rows automatically for its direct
+child elements.
+This behaviour is really essential when we do not know how many rows out content requires.
+
+So since grid automatically generates the rows for us, we get a row height also automatically set by
+the grid system. How to overwrite that?
+grid-auto-rows: 20rem; //now all the automatically generated rows will have 20rem height irrespective of its
+content.
+
+Why automatically generated rows? Why not columns?
+Because grid-auto-flow: row; by default is set to row. Change it to grid-auto-flow: column;
+Then the direct child elements will get new columns instead of rows.
+The use
+grid-auto-columns: 20rem; to set the width of the automatically generated columns to 20rem each.
+
+You can definitely define certain rows by yourself and leave the rest for the grid system to handle.
+Like define the first row to be 20rem, and the first child element will take that row. The rest child elements
+will get an automatically created rows with height set to auto.
+
+Check out auto-fill and auto-fit, these look like something I will never use, but you never know.
+=============================================================================================================
+When to use grid and flexbox?
+If you have a row of elements that sit next to each other, or a column of elements that sit one below each
+other, then use flexbox to position.
+If you have a combination of rows and columns to work with then use grid.
+
+=============================================================================================================
