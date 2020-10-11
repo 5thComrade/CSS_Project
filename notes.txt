@@ -811,3 +811,149 @@ other, then use flexbox to position.
 If you have a combination of rows and columns to work with then use grid.
 
 =============================================================================================================
+CSS Transforms
+
+You add the transform property to the element.
+transform: rotateZ(45deg); 
+transform-origin: top left; //the elements top left corner stays in its place and rotates the element
+                            //by 45deg, by default transform-origin value is center.
+
+How do we position our element after we transform it?
+We use translate for that
+transform: rotateZ(45deg) translateX(3rem) translateY(-1rem);
+
+translate property moves the element along the X or Y axis, please note the X and Y axis are not relative to
+the screen, it is relative to the element ie if the element is titled by 45 degrees, then the X axis goes
+through the center of the element also titled, same with Y axis.
+
+What if we transform an element and the element goes outside the parent element making it look sad?
+Then we go to the parent element and set the following property
+overflow: hidden;
+
+The other values for transform
+skew(20deg, 20deg) or skewX(20deg) or skewY(20deg)
+scale(2) or scaleX(2) or scaleY(2) -->Scale stretches the element along the x and y axis scale(1) is default
+translate(3.5rem, 1rem) or translateX(3.5rem) or translateY(1rem)
+rotate(45deg) === rotateZ(45deg)
+
+3D Transforms
+rotateX(30deg) rotateY(45deg)
+Wow another function perspective(100px); you could use rem too, but perspective is my personal favourite right
+now. Use it with rotateX or rotateY and see the beauty.
+
+You can use perspective as a property in the parent element
+perspective: 100px;
+perspective-origin: center; //by default, use right, left, px's
+
+perspective is how we are looking at the element, from center or from right or from left or 100px from the 
+center, like that.
+
+translateZ(); //the element moves towards us for positive values or away from us for negative values.
+
+If we positioned our child elements in a 3D space and then rotateX(90deg) our parent, will the children
+hold on to thier 3D positions?
+No, if the parent is roatated 90deg along X the parent disappears, even the children disappear.
+that is because the parent has a default property set
+transform-style: flat; //flat is the default
+However, if you want the children to preserve their 3D, we need to
+transform-style: preserve-3d;
+
+If you are flipping the element and you are showing the elements back and you don't like it
+then backface-visibility: hidden; 
+
+=============================================================================================================
+Transitions
+Transitions are applied between the initial value to the desired final value.
+It takes 4 values
+
+transition: <properties you want to watch> <time it should take to reach the desired value>
+            <timing functions> <delay ie how long should we wait before transition can kick in>
+
+transition: opacity 400ms ease-out 1s;
+
+.modal {
+    opacity: 0; //initial opacity
+    transform: translateY(-3rem); //initial transform
+    transition: opacity 400ms ease-out, transform 500ms ease-out;
+}
+
+.showModal {
+    opacity: 1; //desired opacity
+    transform: translateY(0); //desired transform
+}
+
+If you want to watch multiple properties in transition we separate them with a comma.
+If you want to watch all the watchable properties in transition we use transition: all 400ms ease-in;
+
+Instead of the shorthand we could use
+transition-property: opacity;
+transition-duration: 200ms;
+transition-timing-function: ease-out;
+transition-delay: 1s;
+
+timing functions
+Google Timing functions cheat sheet.
+You can create your own timing functions
+transition-timing-function: cubic-bezier(1, 1.68, 1, -1.06);
+
+You can create it on chromes developer tools or look at the cheat sheet.
+
+======================================================================================================
+Animations
+
+Animations is like transitions++
+We use the animation property on the element to animate
+The property takes the following values
+
+element to animate {
+    animation: keyframe duration delay timing-function iterations direction fill-mode play-state;
+}
+
+Example:
+animation: wiggle 200ms 3s ease-out 8 alternate none running;
+
+We have a wiggle keyframe setup, run the animation for 200ms but repeat the animation 8 times within that 200ms
+Also start the animation 3s after the page is reloaded. The direction of the animation is alternate, meaning
+the from and to is calculated as 2 iterations. The fill-mode is set to none(this is the default, you need
+not mention it), this ensures that the element keeps its default position after the animation is over.
+If you set the animation fill mode to forwards, then the element will hold the to position set in the keyframe
+after the animation, if the fill mode is set to backwards, the element will hold the from position
+after the animation is over. The play state determines if we should play the animation or not, here it is 
+set to run.
+
+@keyframes wiggle {
+  from {
+    transform: rotateZ(-10deg);
+  }
+  to {
+    transform: rotateZ(10deg);
+  }
+}
+
+You can also have percentages giving us more control over our Animations
+
+@keyframes wiggle {
+  0% {
+    transform: rotateZ(0);
+  }
+  50% {
+    transform: rotateZ(-10deg);
+  }
+  100% {
+    transform: rotateZ(10deg);
+  }
+}
+
+JavaScript provides 3 events for Animations
+animationstart
+animationend
+animationiteration
+
+ctaButton.addEventListener("animationstart", function (event) {
+  console.log("Animation Started", event);
+});
+
+This gives us more control over animations.
+
+=========================================================================================================
+
